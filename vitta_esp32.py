@@ -84,3 +84,4 @@ class CMD:
         self.ap.config(max_clients=max_clients)
         print("Access point started.\n")
         return self.ap
+    
