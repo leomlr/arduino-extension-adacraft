@@ -6,7 +6,7 @@ from esp32_lcd_i2c import LCD1602
 from vitta_server import SERVER
 from vitta_client import CLIENT
 
-class CMD:
+class AdacraftExtension:
   def __init__(self):
     try:
       self.lcd = LCD1602(i2c=I2C(scl=Pin(22), sda=Pin(21)))
@@ -17,6 +17,9 @@ class CMD:
     self.station = None
     self.ap = None
     print(ready)
+    
+  def respond(self, cmd, status=1, value=None):
+    return "{\"cmd\":\"" + str(cmd).replace('"', '\\"')+ "\", \"status\":" + str(status) + ", \"value\":" + ("null" if value is None else str(value)) + "}\n"
 
   def pinADC(self, pinNumber, db=ADC.ATTN_11DB, bit=ADC.WIDTH_10BIT):
     pin = ADC(Pin(pinNumber))
