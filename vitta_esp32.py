@@ -2,7 +2,16 @@ from machine import *
 import network
 import math
 import utime
-            
+try:
+    from esp32_lcd_i2c import LCD1602
+except: pass
+try:
+    from vitta_client import CLIENT
+except: pass
+try:
+    from vitta_server import SERVER
+except: pass
+
 class CMD:
     def __init__(self):
         try:
