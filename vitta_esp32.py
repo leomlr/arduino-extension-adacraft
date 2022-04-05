@@ -16,10 +16,13 @@ class CMD:
     def __init__(self):
         try:
             self.lcd = LCD1602(i2c=I2C(scl=Pin(22), sda=Pin(21)))
-        except (ValueError, ImportError):
+        except (ValueError, NameError):
             print("LCD 1602 not detected.")
         
     def init(self, ready):
+        self.station = None
+        self.ap = None
+        self.server = None
         print(ready)
         
     def pinADC(self, pinNumber, db=ADC.ATTN_11DB, bit=ADC.WIDTH_10BIT):
