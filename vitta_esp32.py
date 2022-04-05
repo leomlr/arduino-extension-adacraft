@@ -1,6 +1,7 @@
 from machine import *
 import math
 import utime
+import network
 from esp32_lcd_i2c import LCD1602
 
 def pinADC(pinNumber, db=ADC.ATTN_11DB, bit=ADC.WIDTH_10BIT):
@@ -72,5 +73,5 @@ def configure_access_point(ssid='', ip='', activate=True, max_clients=50):
 
 try:
   lcd = LCD1602(i2c=I2C(scl=Pin(22), sda=Pin(21)))
-except OSError:
+except ValueError:
   print("LCD 1602 not detected.")
