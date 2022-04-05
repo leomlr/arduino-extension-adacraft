@@ -2,8 +2,7 @@ from machine import *
 import network
 import math
 import utime
-from esp32_lcd_i2c import LCD1602
-
+            
 class CMD:
     def __init__(self):
         try:
