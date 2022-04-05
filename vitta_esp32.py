@@ -7,11 +7,13 @@ from esp32_lcd_i2c import LCD1602
 class CMD:
   def __init__(self):
     try:
-      lcd = LCD1602(i2c=I2C(scl=Pin(22), sda=Pin(21)))
+      self.lcd = LCD1602(i2c=I2C(scl=Pin(22), sda=Pin(21)))
     except ValueError:
       print("LCD 1602 not detected.")
     
   def init(self, ready):
+    self.station = None
+    self.ap = None
     print(ready)
 
   def pinADC(self, pinNumber, db=ADC.ATTN_11DB, bit=ADC.WIDTH_10BIT):
@@ -31,38 +33,38 @@ class CMD:
     
   def connect_station(self, ssid='', password='', ip='', mask='', gateway=''):
     global station
-    station = network.WLAN(network.STA_IF)
-    if station.isconnected():
-      if station.config('essid') is ssid:
-        print("Already connected on ssid: '%s'" % station.config('essid'))
+    self.station = network.WLAN(network.STA_IF)
+    if self.station.isconnected():
+      if self.station.config('essid') is ssid:
+        print("Already connected on ssid: '%s'" % self.station.config('essid'))
         return
       else:
-        disconnect_station()
+        self.disconnect_station()
     print("\nTrying to connect to '%s' ..." % ssid)
     if len(ip) is not 0:
       if len(gateway) == 0:
         gateway = ip.split('.')[0] + '.' + ip.split('.')[1] + '.' + ip.split('.')[2] + '.1'
       if len(mask) == 0:
         mask = '255.255.255.0'
-      station.ifconfig([ip, mask, gateway, gateway])
-    if not station.active():
-      station.active(True)
-    station.connect(ssid, password)
-    while not station.isconnected():
+      self.station.ifconfig([ip, mask, gateway, gateway])
+    if not self.station.active():
+      self.station.active(True)
+    self.station.connect(ssid, password)
+    while not self.station.isconnected():
       pass
     print("Station connected !")
   
   def disconnect_station(self):
-    if station is not None and station.isconnected():
-      ssid = station.config('essid')
-      station.disconnect()
+    if self.station is not None and self.station.isconnected():
+      ssid = self.station.config('essid')
+      self.station.disconnect()
       for retry in range(100):
-        connected = station.isconnected()
+        connected = self.station.isconnected()
         if not connected:
           break
         utime.sleep(0.1)
       if not connected:
-        station.active(False)
+        self.station.active(False)
         utime.sleep(0.2)
         print("Disconnected from '%s'\n" %ssid)
       else:
@@ -71,12 +73,12 @@ class CMD:
       print("Station already disconnected.\n")
       
   def configure_access_point(self, ssid='', ip='', activate=True, max_clients=50):
-    ap = network.WLAN(network.AP_IF)
+    self.ap = network.WLAN(network.AP_IF)
     if len(ip) is not 0:
       gateway = ip.split('.')[0] + '.' + ip.split('.')[1] + '.' + ip.split('.')[2] + '.1'
-      ap.ifconfig([ip, '255.255.255.0', gateway, gateway])
-    ap.active(activate)
-    ap.config(essid=ssid, password='')
-    ap.config(max_clients=max_clients)
+      self.ap.ifconfig([ip, '255.255.255.0', gateway, gateway])
+    self.ap.active(activate)
+    self.ap.config(essid=ssid, password='')
+    self.ap.config(max_clients=max_clients)
     print("Access point started.\n")
-    return ap
+    return self.ap
