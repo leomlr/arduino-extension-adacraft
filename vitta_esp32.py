@@ -8,7 +8,7 @@ class CMD:
     def __init__(self):
         try:
             self.lcd = LCD1602(i2c=I2C(scl=Pin(22), sda=Pin(21)))
-        except ValueError:
+        except (ValueError, ImportError):
             print("LCD 1602 not detected.")
         
     def init(self, ready):
@@ -28,3 +28,6 @@ class CMD:
         elif unit == 'kelvin':
             t += 273.15
         return t
+    
+    def respond(self, cmd, status=1, value=None):
+        return "{\"cmd\":\"" + str(cmd).replace('"', '\\"')+ "\", \"status\":" + str(status) + ", \"value\":" + ("null" if value is None else str(value)) + "}\n"
