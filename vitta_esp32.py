@@ -77,5 +77,3 @@ class CMD:
     ap.config(max_clients=max_clients)
     print("Access point started.\n")
     return ap
-    
-vitta_cmd = CMD()
