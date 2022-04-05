@@ -2,9 +2,9 @@ from machine import *
 import network
 import math
 import utime
-# from esp32_lcd_i2c import LCD1602
-# from vitta_server import SERVER
-# from vitta_client import CLIENT
+from esp32_lcd_i2c import LCD1602
+from vitta_server import SERVER
+from vitta_client import CLIENT
 
 class AdacraftExtension:
   def __init__(self):
@@ -17,9 +17,6 @@ class AdacraftExtension:
     self.station = None
     self.ap = None
     print(ready)
-    
-  def respond(self, cmd, status=1, value=None):
-    return "{\"cmd\":\"" + str(cmd).replace('"', '\\"')+ "\", \"status\":" + str(status) + ", \"value\":" + ("null" if value == None else str(value)) + "}\n"
 
   def pinADC(self, pinNumber, db=ADC.ATTN_11DB, bit=ADC.WIDTH_10BIT):
     pin = ADC(Pin(pinNumber))
