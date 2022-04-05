@@ -2,9 +2,9 @@ from machine import *
 import network
 import math
 import utime
-from esp32_lcd_i2c import LCD1602
-from vitta_server import SERVER
-from vitta_client import CLIENT
+# from esp32_lcd_i2c import LCD1602
+# from vitta_server import SERVER
+# from vitta_client import CLIENT
 
 class AdacraftExtension:
   def __init__(self):
@@ -19,7 +19,7 @@ class AdacraftExtension:
     print(ready)
     
   def respond(self, cmd, status=1, value=None):
-    return "{\"cmd\":\"" + str(cmd).replace('"', '\\"')+ "\", \"status\":" + str(status) + ", \"value\":" + ("null" if value is None else str(value)) + "}\n"
+    return "{\"cmd\":\"" + str(cmd).replace('"', '\\"')+ "\", \"status\":" + str(status) + ", \"value\":" + ("null" if value == None else str(value)) + "}\n"
 
   def pinADC(self, pinNumber, db=ADC.ATTN_11DB, bit=ADC.WIDTH_10BIT):
     pin = ADC(Pin(pinNumber))
@@ -37,7 +37,6 @@ class AdacraftExtension:
     return t
     
   def connect_station(self, ssid='', password='', ip='', mask='', gateway=''):
-    global station
     self.station = network.WLAN(network.STA_IF)
     if self.station.isconnected():
       if self.station.config('essid') is ssid:
