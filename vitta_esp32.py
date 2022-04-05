@@ -3,10 +3,8 @@ import network
 import math
 import utime
 from esp32_lcd_i2c import LCD1602
-from vitta_server import SERVER
-from vitta_client import CLIENT
 
-class CMD(object):
+class CMD:
   def __init__(self):
     try:
       self.lcd = LCD1602(i2c=I2C(scl=Pin(22), sda=Pin(21)))
