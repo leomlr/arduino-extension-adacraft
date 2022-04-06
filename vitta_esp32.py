@@ -15,6 +15,10 @@ class AdacraftExtension:
             self.lcd = LCD1602(i2c=I2C(scl=Pin(22), sda=Pin(21)))
         except (ValueError, NameError):
             print("LCD 1602 not detected.")
+        try:
+            self.server = SERVER()
+        except (ValueError, NameError):
+            print("SERVER not detected.")
         
     def init(self, ready):
         self.station = None
