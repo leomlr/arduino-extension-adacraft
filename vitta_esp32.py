@@ -47,7 +47,7 @@ class AdacraftExtension:
                 print("Already connected on ssid: '%s'" % self.station.config('essid'))
                 return
             else:
-                disconnect_station()
+                self.disconnect_station()
         print("\nTrying to connect to '%s' ..." % ssid)
         if len(ip) is not 0:
             if len(gateway) == 0:
