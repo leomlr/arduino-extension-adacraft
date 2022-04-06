@@ -2,8 +2,14 @@ from machine import *
 import network
 import math
 import utime
+try:
+    from esp32_lcd_i2c import LCD1602
+    from vitta_server import SERVER
+    from vitta_client import CLIENT
+except ImportError:
+    print("Cannot import libraries")
 
-class CMD:
+class AdacraftExtension:
     def __init__(self):
         try:
             self.lcd = LCD1602(i2c=I2C(scl=Pin(22), sda=Pin(21)))
