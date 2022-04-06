@@ -17,6 +17,7 @@ class AdacraftExtension:
             print("LCD 1602 not detected.")
         try:
             self.server = SERVER()
+            self.serverInit = False
         except (ValueError, NameError):
             print("SERVER not detected.")
         
