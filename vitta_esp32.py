@@ -4,10 +4,16 @@ import math
 import utime
 try:
     from esp32_lcd_i2c import LCD1602
+except ImportError:
+    print("Cannot import esp32_lcd_i2c")
+try:
     from vitta_server import SERVER
+except ImportError:
+    print("Cannot import vitta_server")
+try:
     from vitta_client import CLIENT
 except ImportError:
-    print("Cannot import libraries")
+    print("Cannot import vitta_client")
 
 class AdacraftExtension:
     def __init__(self):
