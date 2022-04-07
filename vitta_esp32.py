@@ -27,9 +27,10 @@ class AdacraftExtension:
         except (ValueError, NameError):
             print("SERVER not detected.")
         
-    def init(self):
+    def init(self, ready):
         self.station = None
         self.ap = None
+        print(ready)
         
     def pinADC(self, pinNumber, db=ADC.ATTN_11DB, bit=ADC.WIDTH_10BIT):
         pin = ADC(Pin(pinNumber))
