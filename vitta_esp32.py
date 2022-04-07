@@ -30,7 +30,6 @@ class AdacraftExtension:
     def init(self, ready):
         self.station = None
         self.ap = None
-        self.server = None
         print(ready)
         
     def pinADC(self, pinNumber, db=ADC.ATTN_11DB, bit=ADC.WIDTH_10BIT):
