@@ -7,10 +7,6 @@ try:
 except ImportError:
     print("Cannot import esp32_lcd_i2c")
 try:
-    from vitta_server import SERVER
-except ImportError:
-    print("Cannot import vitta_server")
-try:
     from vitta_client import CLIENT
 except ImportError:
     print("Cannot import vitta_client")
@@ -22,7 +18,7 @@ class AdacraftExtension:
         except (ValueError, NameError):
             print("LCD 1602 not detected.")
         try:
-            self.server = SERVER()
+            self.client = CLIENT(port=80)
             self.serverInit = False
         except (ValueError, NameError):
             print("SERVER not detected.")
