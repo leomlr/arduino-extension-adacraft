@@ -31,7 +31,7 @@ class AdacraftExtension:
     self.ap = None
     print(ready)
     
-  def pinADC(pinNumber, db=ADC.ATTN_11DB, bit=ADC.WIDTH_13BIT):
+  def pinADC(self, pinNumber, db=ADC.ATTN_11DB, bit=ADC.WIDTH_13BIT):
     pin = ADC(Pin(pinNumber))
     pin.atten(db)
     pin.width(bit)
@@ -46,7 +46,7 @@ class AdacraftExtension:
     except:
       __PWM[str(pin)] = PWM(pin, freq=int(frequency if frequency is not None else 1000), duty=int(duty))
 
-  def getGroveTemperature(pin, unit='celsius'):
+  def getGroveTemperature(self, pin, unit='celsius'):
     R = (8191.0/pin.read()-1.0)*100000
     t = 1/(math.log(R/100000)/4250+1/298.15) - 273.15 # celsius
     if unit == 'fahrenheit':
@@ -55,13 +55,13 @@ class AdacraftExtension:
       t += 273.15
     return round(t, 2)
 
-  def setServoAngle(pin, angle):
+  def setServoAngle(self, pin, angle):
     if (angle >= 0 and angle <= 180):
       writePWM(pin, 0.025*1023 + (angle*0.1*1023)/180)
     else:
       raise ValueError("Servomotor angle have to be set between 0 and 180")
   
-  def setServoSpeed(pin, direction, speed):
+  def setServoSpeed(self, pin, direction, speed):
     if (speed >= 0 and speed <= 100):
       GAP = 14
       if direction == 1:
