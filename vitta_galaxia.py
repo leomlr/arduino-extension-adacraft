@@ -37,7 +37,7 @@ class AdacraftExtension:
     pin.width(bit)
     return pin
     
-  def writePWM(pin, duty, frequency = None):
+  def writePWM(self, pin, duty, frequency = None):
     global __PWM
     try:
       __PWM[str(pin)].duty(int(duty))
@@ -57,7 +57,7 @@ class AdacraftExtension:
 
   def setServoAngle(self, pin, angle):
     if (angle >= 0 and angle <= 180):
-      writePWM(pin, 0.025*1023 + (angle*0.1*1023)/180)
+      self.writePWM(pin, 0.025*1023 + (angle*0.1*1023)/180)
     else:
       raise ValueError("Servomotor angle have to be set between 0 and 180")
   
@@ -66,11 +66,11 @@ class AdacraftExtension:
       GAP = 14
       if direction == 1:
         speedAngle = 90*(1+speed/100) - GAP
-        writePWM(pin, speedAngle)
+        self.writePWM(pin, speedAngle)
       elif direction == -1:
         speedAngle = 90*(1-speed/100) - GAP
         if speedAngle < 0: speedAngle = 1
-        writePWM(pin, speedAngle)
+        self.writePWM(pin, speedAngle)
       else:
         raise ValueError("continuous servomotor has no direction: '" + str(direction) + "'")
     else:
@@ -129,4 +129,3 @@ class AdacraftExtension:
     self.ap.config(max_clients=max_clients)
     print("Access point started.\n")
     return self.ap
-  
